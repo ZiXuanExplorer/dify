@@ -179,4 +179,5 @@ from .workspace import (
     plugin,
     tool_providers,
     workspace,
+    user_email_resources
 )
