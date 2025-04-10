@@ -221,7 +221,7 @@ class AccountIntegrateApi(Resource):
 
         base_url = request.url_root.rstrip("/")
         oauth_base_path = "/console/api/oauth/login"
-        providers = ["github", "google"]
+        providers = ["github", "google", "ailab"]
 
         integrate_data = []
         for provider in providers:

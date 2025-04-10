@@ -550,6 +550,17 @@ class AuthConfig(BaseSettings):
         default=None,
     )
 
+      # AI实验平台 OAuth Configuration
+    AILAB_OAUTH_CLIENT_ID: Optional[str] = Field(
+        description="AI实验平台 OAuth client ID",
+        default=None,
+    )
+
+    AILAB_OAUTH_CLIENT_SECRET: Optional[str] = Field(
+        description="AI实验平台 OAuth client secret",
+        default=None,
+    )
+
     ACCESS_TOKEN_EXPIRE_MINUTES: PositiveInt = Field(
         description="Expiration time for access tokens in minutes",
         default=60,

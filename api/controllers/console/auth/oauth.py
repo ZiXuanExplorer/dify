@@ -14,7 +14,7 @@ from constants.languages import languages
 from events.tenant_event import tenant_was_created
 from extensions.ext_database import db
 from libs.helper import extract_remote_ip
-from libs.oauth import GitHubOAuth, GoogleOAuth, OAuthUserInfo
+from libs.oauth import GitHubOAuth, GoogleOAuth, OAuthUserInfo, AILabOAuth
 from models import Account
 from models.account import AccountStatus
 from services.account_service import AccountService, RegisterService, TenantService
@@ -44,9 +44,18 @@ def get_oauth_providers():
                 redirect_uri=dify_config.CONSOLE_API_URL + "/console/api/oauth/authorize/google",
             )
 
-        OAUTH_PROVIDERS = {"github": github_oauth, "google": google_oauth}
-        return OAUTH_PROVIDERS
+       # 添加AI实验平台 OAuth 提供程序
+        ailab_oauth = None
+        if getattr(dify_config, "AILAB_OAUTH_CLIENT_ID", None) and getattr(dify_config, "AILAB_OAUTH_CLIENT_SECRET", None):
+            
+            ailab_oauth = AILabOAuth(
+                client_id=dify_config.AILAB_OAUTH_CLIENT_ID,
+                client_secret=dify_config.AILAB_OAUTH_CLIENT_SECRET,
+                redirect_uri=dify_config.CONSOLE_API_URL + "/console/api/oauth/authorize/ailab"
+            )
 
+        OAUTH_PROVIDERS = {"github": github_oauth, "google": google_oauth, "ailab": ailab_oauth}
+        return OAUTH_PROVIDERS
 
 class OAuthLogin(Resource):
     def get(self, provider: str):

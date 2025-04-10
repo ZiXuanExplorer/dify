@@ -22,6 +22,18 @@ export default function SocialAuth(props: SocialAuthProps) {
     return url
   }
   return <>
+   <div className='w-full'>
+      <a href={getOAuthLink('/oauth/login/ailab')}>
+        <Button
+          disabled={props.disabled}
+          className='w-full'
+        >
+          <>
+            <span className="truncate">使用 AI实验平台 账号登录</span>
+          </>
+        </Button>
+      </a>
+    </div>
     <div className='w-full'>
       <a href={getOAuthLink('/oauth/login/github')}>
         <Button

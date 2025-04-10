@@ -5,8 +5,8 @@
 # ==================================================================
 
 x-shared-env: &shared-api-worker-env
-  CONSOLE_API_URL: ${CONSOLE_API_URL:-}
-  CONSOLE_WEB_URL: ${CONSOLE_WEB_URL:-}
+  CONSOLE_API_URL: ${CONSOLE_API_URL:-http://localhost}
+  CONSOLE_WEB_URL: ${CONSOLE_WEB_URL:-http://localhost}
   SERVICE_API_URL: ${SERVICE_API_URL:-}
   APP_API_URL: ${APP_API_URL:-}
   APP_WEB_URL: ${APP_WEB_URL:-}
@@ -459,7 +459,11 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   api:
-    image: langgenius/dify-api:1.2.0
+    # image: langgenius/dify-api:1.2.0
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    image: dify-api:local
     restart: always
     environment:
       # Use the shared environment variables.
@@ -473,6 +477,12 @@ services:
       PLUGIN_REMOTE_INSTALL_PORT: ${EXPOSE_PLUGIN_DEBUGGING_PORT:-5003}
       PLUGIN_MAX_PACKAGE_SIZE: ${PLUGIN_MAX_PACKAGE_SIZE:-52428800}
       INNER_API_KEY_FOR_PLUGIN: ${PLUGIN_DIFY_INNER_API_KEY:-QaHbTe77CtuXmsfyhR7+vRjI/+XbV1AaFy691iy+kGDv2Jvy0/eAh8Y1}
+      ENABLE_SOCIAL_OAUTH_LOGIN: ${ENABLE_SOCIAL_OAUTH_LOGIN:-true}
+      ALLOW_REGISTER: ${ALLOW_REGISTER:-true}
+      ALLOW_CREATE_WORKSPACE: ${ALLOW_CREATE_WORKSPACE:-true}
+      AILAB_OAUTH_CLIENT_ID: ${AILAB_OAUTH_CLIENT_ID:-ed2a49e6dd87e4e31e83a7e31b7acffe}
+      AILAB_OAUTH_CLIENT_SECRET: ${AILAB_OAUTH_CLIENT_SECRET:-OrMylHqBwg7bwFlUTqAps3a8bofvIBVxYHEpa7CY8Wvf2ZveX4AMebfkCyQtojL2}
+ 
     depends_on:
       - db
       - redis
@@ -486,7 +496,11 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:1.2.0
+    # image: langgenius/dify-api:1.2.0
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    image: dify-api:local
     restart: always
     environment:
       # Use the shared environment variables.
@@ -510,7 +524,11 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:1.2.0
+    # image: langgenius/dify-web:1.2.0
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+    image: dify-web:local
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
