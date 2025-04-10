@@ -5,11 +5,11 @@
 # ==================================================================
 
 x-shared-env: &shared-api-worker-env
-  CONSOLE_API_URL: ${CONSOLE_API_URL:-http://localhost}
-  CONSOLE_WEB_URL: ${CONSOLE_WEB_URL:-http://localhost}
-  SERVICE_API_URL: ${SERVICE_API_URL:-}
-  APP_API_URL: ${APP_API_URL:-}
-  APP_WEB_URL: ${APP_WEB_URL:-}
+  CONSOLE_API_URL: ${CONSOLE_API_URL:-http://14.103.237.236}
+  CONSOLE_WEB_URL: ${CONSOLE_WEB_URL:-http://14.103.237.236}
+  SERVICE_API_URL: ${SERVICE_API_URL:-http://14.103.237.236}
+  APP_API_URL: ${APP_API_URL:-http://14.103.237.236}
+  APP_WEB_URL: ${APP_WEB_URL:-http://14.103.237.236}
   FILES_URL: ${FILES_URL:-}
   LOG_LEVEL: ${LOG_LEVEL:-INFO}
   LOG_FILE: ${LOG_FILE:-/app/logs/server.log}
@@ -532,7 +532,7 @@ services:
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
-      APP_API_URL: ${APP_API_URL:-}
+      APP_API_URL: ${APP_API_URL:-http://14.103.237.236}
       SENTRY_DSN: ${WEB_SENTRY_DSN:-}
       NEXT_TELEMETRY_DISABLED: ${NEXT_TELEMETRY_DISABLED:-0}
       TEXT_GENERATION_TIMEOUT_MS: ${TEXT_GENERATION_TIMEOUT_MS:-60000}
